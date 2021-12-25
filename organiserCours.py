@@ -3,7 +3,7 @@ import shutil
 import sys
 
 
-def organize_files(path: str):
+def organize_files(path: str, exclude_no_formated=False):
     """Organise the files"""
     if not os.path.exists(path):
         print(f"ERROR. Not found {path} or not exists.")
@@ -17,11 +17,11 @@ def organize_files(path: str):
         print(f"\rFiles found: {nb_files}", flush=True, end='')
 
         for file in files:
-            move(os.path.join(root, file), "NotClassified")
+            if not is_correctly_rooted(file, root):
+                if correct_root_of(file)[0] != '#' or exclude_no_formated:
+                    move(os.path.join(root, file),
+                         os.path.join(correct_root_of(file)))
 
-        if root != path and len(files) == 0:
-            os.remove(root)
-    print('')
     return
 
 
@@ -49,7 +49,7 @@ def is_correctly_rooted(file_name: str, file_root: str) -> bool:
     return correct_root == relative_root
 
 
-def correct_root_of(file_name: str):
+def correct_root_of(file_name: str) -> str:
     r"""Returns the correct path according to the file name
 
     Args:
