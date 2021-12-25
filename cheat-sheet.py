@@ -2,6 +2,9 @@ import shutil
 import os
 import sys
 
+# python
+"string".strip(".")  # removes the . at the beginning and the end
+
 # os
 os.getcwd()  # get current path
 os.chdir("path")  # change current path
@@ -17,7 +20,7 @@ os.path.splitext("file.ext")  # returns ["file", ".ext"]
 os.path.join("path", "file")  # returns path\file
 os.path.join("path", "dir", "file")  # returns path\dir\file
 os.path.isdir("path")  # checks if it's a directory
-os.path.isfile("path")  # checks if it's a directory
+os.path.isfile("path")  # checks if it's a file
 
 
 # shutil

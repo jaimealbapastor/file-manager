@@ -3,25 +3,23 @@ import shutil
 import sys
 
 
-def extract_files(path: str):
-    # extracts all the files from folders
+def organize_files(path: str):
+    """Organise the files"""
     if not os.path.exists(path):
         print(f"ERROR. Not found {path} or not exists.")
         return
 
-    file_list = []
-    dir_list = []
+    nb_files = 0
 
     for root, dirs, files in os.walk(path):
-        file_list += files
-        dir_list += dirs
+        nb_files += len(files)
 
-        print(f"\rFiles found: {len(file_list)}", flush=True, end='')
+        print(f"\rFiles found: {nb_files}", flush=True, end='')
 
         for file in files:
             move(os.path.join(root, file), "NotClassified")
 
-        if root != path and len(dir_list) == 0:
+        if root != path and len(files) == 0:
             os.remove(root)
     print('')
     return
@@ -34,11 +32,40 @@ def move(file_path: str, dir_path: str):
     shutil.move(file_path, dir_path)
 
 
-def organize(path: str):
-    # organize de files from
-    return
+def is_correctly_rooted(file_name: str, file_root: str) -> bool:
+    r"""Checks if the file is correctly located according to the name. Check README for formatting style.
+
+    Args:
+        file_name (str): name of the file. EX: name of \User\Desktop\example.txt is example.txt
+        file_root (str): absolute path of the parent directory.
+    """
+
+    # name = title-chapter-subject-year.ext
+    # correct_root = parent_path\subject\year-chapter
+
+    correct_root = correct_root_of(file_name)
+    relative_root = file_root[-len(correct_root):]
+
+    return correct_root == relative_root
+
+
+def correct_root_of(file_name: str):
+    r"""Returns the correct path according to the file name
+
+    Args:
+        file_name (str): name of the file. EX: name of \User\Desktop\example.txt is example.txt
+    """
+    name = os.path.splitext(file_name)[0].split("-")
+
+    if len(name) == 4:
+        # \subject\year-chapter
+        return os.path.join(name[2], name[3]+"-"+name[1])
+    elif len(name) == 3:
+        return os.path.join(name)  # \subject
+    elif len(name) == 2:
+        return os.path.join("#General-"+name[1])  # \general-year
+
+    return "#no-formated"
 
 
 path = "C:/Users/Jaime/Desktop/pruebaficheros"
-
-extract_files(path)
