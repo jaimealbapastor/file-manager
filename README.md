@@ -2,7 +2,6 @@
 
 Automate organisation of reMarkable2 files since these are deleted after 3 months.
 Goals:
-- Download files from reMarkable web
 - Checks if new file exists and saves it in the database.
 - If a file already exists, replace it with the newest version.
 - Create a trash with the older versions
@@ -18,5 +17,10 @@ Other sub-formats:
 
 
 ## Next steps
+- download files from reMarkable web
 - manage files directly in google drive
 - delete trash files after x months
+
+## How to use it
+Type on the terminal:  
+`python organizeRM.py [path of directory to organise :str] [isolate non formated files :bool (optional)]`
