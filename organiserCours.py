@@ -58,12 +58,13 @@ def correct_root_of(file_name: str) -> str:
     name = os.path.splitext(file_name)[0].split("-")
 
     if len(name) == 4:
-        # \subject\year-chapter
+        # title-chapter-subject-year.ext -> \subject\year-chapter
         return os.path.join(name[2], name[3]+"-"+name[1])
     elif len(name) == 3:
-        return os.path.join(name)  # \subject
+        return os.path.join(name[1])  # title-subject-year.ext -> \subject
     elif len(name) == 2:
-        return os.path.join("#General-"+name[1])  # \general-year
+        # title-year.ext -> \general-year
+        return os.path.join("#General-"+name[1])
 
     return "#no-formated"
 
