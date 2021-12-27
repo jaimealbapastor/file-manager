@@ -1,6 +1,6 @@
 import os
 import shutil
-import sys
+from sys import argv
 
 
 class Category:
@@ -145,15 +145,25 @@ def move_to_duplicated(file_path: str, path: str):
         move(file_path, bin_path)
 
 
+def remove_empty_folders(path_abs):
+    walk = list(os.walk(path_abs))
+    for path, _, _ in walk[::-1]:
+        if len(os.listdir(path)) == 0:
+            os.rmdir(path)
+
+
 if __name__ == "__main__":
     try:
-        if len(sys.argv) == 1:
-            organize_files(os.getcwd())
-        elif len(sys.argv) == 2:
-            directory_location = sys.argv[1]
-            organize_files(directory_location)
-        else:
-            directory_location = sys.argv[1]
-            organize_files(directory_location, sys.argv[2])
+        abs_path = os.getcwd()
+        exclude_non_formated = False
+
+        if len(argv) == 2:
+            abs_path = argv[1]
+        elif len(argv) > 2:
+            abs_path = argv[1]
+            exclude_non_formated = argv[2]
+
+        organize_files(abs_path, exclude_non_formated)
+        remove_empty_folders(abs_path)
     except Exception as e:
         print(f"There was an error: {str(e)}")

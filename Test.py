@@ -1,17 +1,12 @@
-import sys
 import os
-from time import sleep
-from file_organizer import directory
-import organizeRM
 
-#path = os.getcwd()
 
-if __name__ == "__main__":
-    try:
-        directory_location = sys.argv[1]
-        if len(sys.argv) < 3:
-            organizeRM.organize_files(directory_location)
-        else:
-            organizeRM.organize_files(directory_location, sys.argv[2])
-    except Exception as e:
-        print(f"There was an error: {str(e)}")
+def remove_empty_folders(path_abs):
+    walk = list(os.walk(path_abs))
+    for path, _, _ in walk[::-1]:
+        if len(os.listdir(path)) == 0:
+            os.rmdir(path)
+
+
+if __name__ == '__main__':
+    remove_empty_folders("C:\\Users\\Jaime\\Desktop\\test")

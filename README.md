@@ -1,10 +1,16 @@
 # reMarkableProjects
 
 Automate organisation of reMarkable2 files since these are deleted after 3 months.  
-Goals:
+**organiseRM.py**:
 - Checks if new file exists and saves it in the database.
-- If a file already exists, replace it with the newest version.
-- Create a bin with the older versions
+- If a file already exists, the older version is replaced by the newer one.
+- Creates a bin with the older versions.
+- Creates a folder with the non formatted files (optional).
+- Deletes the empty folders.  
+
+**convertPDF.py**:
+- Combines the images into pdf with the parent directory name.
+- Deletes permanently the original folder with images after the pdf is created.
 
 ## File Format
 
