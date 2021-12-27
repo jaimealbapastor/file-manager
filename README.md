@@ -21,6 +21,12 @@ Other sub-formats:
 - `title-year.ext`
 - `title-subject-year.ext`
 
+## How to use it
+To organize your files type in the terminal:  
+`python organizeRM.py [path of directory to organise :str] [isolate non formated files :bool (optional)]`  
+
+To convert folder with images to pdf type in the terminal:  
+`python convertPDF.py [path of the directory with the folders: str]`
 
 ## Next steps
 - combine compressed images into pdf
@@ -28,6 +34,3 @@ Other sub-formats:
 - manage files directly in google drive
 - delete trash files after x months
 
-## How to use it
-Type on the terminal:  
-`python organizeRM.py [path of directory to organise :str] [isolate non formated files :bool (optional)]`
