@@ -9,10 +9,16 @@ class Category:
     duplicated = "3~Bin"
 
 # TODO convertir a clase para atributos path
+# TODO change shutil.move() to os.rename()
 
 
 def organize_files(path: str, exclude_no_formated=False):
-    """Organize the files"""
+    r"""Organizes the files into a specific format. Check README for more.
+
+    Args:
+        path (str): path of the main directory to organise
+        exclude_no_formated (bool, optional): the non formated file names can whether be moved into a non formated directory or left where they are. Defaults to False.
+    """
     if not os.path.exists(path):
         print(f"ERROR. Not found {path} or not exists.")
         return
@@ -20,10 +26,6 @@ def organize_files(path: str, exclude_no_formated=False):
     nb_files = 0
 
     for root, dirs, files in os.walk(path):
-        nb_files += len(files)
-
-        print(f"\rFiles found: {nb_files}", flush=True, end='')
-
         for file in files:
             if not is_correctly_rooted(file, root, path) and Category.duplicated not in root:
                 correct_root = correct_root_of(file, path)
@@ -36,14 +38,16 @@ def organize_files(path: str, exclude_no_formated=False):
 
                     if os.path.isfile(file2_path):
                         if file_path == newest(file_path, file2_path):
-                            move_to_bin(file2_path, path)
+                            move_to_duplicated(file2_path, path)
                             move(file_path, correct_root)
                         else:
-                            move_to_bin(file_path, path)
+                            move_to_duplicated(file_path, path)
                     else:
                         move(file_path, correct_root)
 
                     # ---------------------
+                    nb_files += 1
+                    print(f"\rFiles moved: {nb_files}", flush=True, end='')
 
 
 def is_correctly_rooted(name: str, root: str, path: str) -> bool:
@@ -51,7 +55,8 @@ def is_correctly_rooted(name: str, root: str, path: str) -> bool:
 
     Args:
         name (str): name of the file. EX: name of \User\Desktop\example.txt is example.txt
-        root (str): absolute path of the parent directory.
+        root (str): path of the parent directory.
+        path (str): path of the main directory to organise
     """
 
     # name = title-chapter-subject-year.ext
@@ -68,7 +73,8 @@ def correct_root_of(name: str, path: str) -> str:
     Can be used with absolute and relative path
 
     Args:
-        file_name (str): name of the file. EX: name of \User\Desktop\example.txt is example.txt
+        name (str): name of the file. EX: name of \User\Desktop\example.txt is example.txt
+        path (str): path of the main directory to organise
     """
     name_parts = os.path.splitext(name)[0].split("-")
 
@@ -86,18 +92,39 @@ def correct_root_of(name: str, path: str) -> str:
 
 
 def newest(file_path: str, file2_path: str) -> str:
+    r"""Choose the newest file
+
+    Args:
+        file_path (str): path of the 1st file
+        file2_path (str): path of the 2nd file
+
+    Returns:
+        str: the path of the newest file 
+    """
     if os.path.getmtime(file_path) > os.path.getmtime(file2_path):
         return file_path
     return file2_path
 
 
-def move(file_path: str, dir_path: str):
-    if not os.path.isdir(dir_path):
-        os.makedirs(dir_path)
-    shutil.move(file_path, dir_path)
+def move(file_path: str, root: str):
+    r"""Moves the file to a directory after checking if it exists. If not the directory/ies is/are created
+
+    Args:
+        file_path (str): the path of the file to move
+        root (str): path of the directory where to move the file
+    """
+    if not os.path.isdir(root):
+        os.makedirs(root)
+    shutil.move(file_path, root)
 
 
-def move_to_bin(file_path: str, path: str):
+def move_to_duplicated(file_path: str, path: str):
+    r"""Moves the file to the duplicated directory and changes the name if it's already duplicated
+
+    Args:
+        file_path (str): path of the file
+        path (str): path (str): path of the main directory to organise
+    """
     bin_path = os.path.join(path, Category.duplicated)
     file_in_bin_path = os.path.join(bin_path, os.path.basename(file_path))
     if os.path.isfile(file_in_bin_path):
@@ -118,7 +145,15 @@ def move_to_bin(file_path: str, path: str):
         move(file_path, bin_path)
 
 
-try:
-    organize_files("C:\\Users\\Jaime\\Desktop\\test")
-except Exception as e:
-    print(f"There was an error: {str(e)}")
+if __name__ == "__main__":
+    try:
+        if len(sys.argv) == 1:
+            organize_files(os.getcwd())
+        elif len(sys.argv) == 2:
+            directory_location = sys.argv[1]
+            organize_files(directory_location)
+        else:
+            directory_location = sys.argv[1]
+            organize_files(directory_location, sys.argv[2])
+    except Exception as e:
+        print(f"There was an error: {str(e)}")

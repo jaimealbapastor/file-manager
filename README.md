@@ -1,10 +1,10 @@
 # reMarkableProjects
 
-Automate organisation of reMarkable2 files since these are deleted after 3 months.
+Automate organisation of reMarkable2 files since these are deleted after 3 months.  
 Goals:
 - Checks if new file exists and saves it in the database.
 - If a file already exists, replace it with the newest version.
-- Create a trash with the older versions
+- Create a bin with the older versions
 
 ## File Format
 
@@ -17,6 +17,7 @@ Other sub-formats:
 
 
 ## Next steps
+- combine compressed images into pdf
 - download files from reMarkable web
 - manage files directly in google drive
 - delete trash files after x months
