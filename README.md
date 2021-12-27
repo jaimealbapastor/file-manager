@@ -29,8 +29,9 @@ To convert folder with images to pdf type in the terminal:
 `python convertPDF.py [path of the directory with the folders: str]`
 
 ## Next steps
-- combine compressed images into pdf
-- download files from reMarkable web
-- manage files directly in google drive
-- delete trash files after x months
+-[x] combine compressed images into pdf
+-[ ] download files from reMarkable web
+-[ ] manage files directly in google drive
+-[ ] delete trash files after x months
+-[ ] rename files from folder position
 
