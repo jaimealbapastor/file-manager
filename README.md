@@ -44,9 +44,9 @@ To format file names type in the terminal:
 `python formatNames.py [path of the directory with the folders: str (optional)] [combine png to pdf: bool (optional)]`
 
 ## Next steps
--[x] combine compressed images into pdf
--[ ] download files from reMarkable web
--[ ] manage files directly in google drive
--[ ] delete trash files after x months
--[x] rename files from folder position
+-[x] combine compressed images into pdf  
+-[ ] download files from reMarkable web  
+-[ ] manage files directly in google drive  
+-[ ] delete trash files after x months  
+-[x] rename files from folder position  
 
