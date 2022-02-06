@@ -8,6 +8,9 @@ class Category:
     nonformated = "2~Non_Formated"
     duplicated = "3~Bin"
 
+
+splitter = "_"
+
 # TODO convertir a clase para atributos path
 # TODO change shutil.move() to os.rename()
 
@@ -43,7 +46,7 @@ def organize_files(path: str, exclude_no_formated=False):
                         else:
                             move_to_duplicated(file_path, path)
                     else:
-                        move(file_path, correct_root)
+                        move(file_path,  correct_root)
 
                     # ---------------------
                     nb_files += 1
@@ -76,18 +79,28 @@ def correct_root_of(name: str, path: str) -> str:
         name (str): name of the file. EX: name of \User\Desktop\example.txt is example.txt
         path (str): path of the main directory to organise
     """
-    name_parts = os.path.splitext(name)[0].split("-")
-
-    if len(name_parts) == 4:
+    name_parts = os.path.splitext(name)[0].split(splitter)
+    nbParts = len(name_parts)
+    '''
+    if nbParts == 4:
         # title-chapter-subject-year.ext -> \subject\year-chapter
-        return os.path.join(path, name_parts[2], name_parts[3]+"-"+name_parts[1])
-    elif len(name_parts) == 3:
+        return os.path.join(path, name_parts[2], name_parts[3]+Format.splitter+name_parts[1])
+    elif nbParts == 3:
         # title-subject-year.ext -> \subject
         return os.path.join(path, name_parts[1])
-    elif len(name_parts) == 2:
+    '''
+    if nbParts == 2:
         # title-year.ext -> \general-year
         return os.path.join(path, Category.general+name_parts[1])
-
+    elif nbParts == 3:
+        # title-subject-year.ext
+        return os.path.join(path, name_parts[1])
+    elif nbParts > 3:
+        # title-1-2-3-4-year.ext -> \4\3\2\1
+        correct_root = name_parts[1]
+        for subfolder in name_parts[2:-1]:
+            correct_root = os.path.join(subfolder, correct_root)
+        return correct_root
     return os.path.join(path, Category.nonformated)
 
 
@@ -152,18 +165,18 @@ def remove_empty_folders(path_abs):
             os.rmdir(path)
 
 
-if __name__ == "__main__":
-    try:
-        abs_path = os.getcwd()
-        exclude_non_formated = False
+# if __name__ == "__main__":
+try:
+    abs_path = os.getcwd()
+    exclude_non_formated = False
 
-        if len(argv) == 2:
-            abs_path = argv[1]
-        elif len(argv) > 2:
-            abs_path = argv[1]
-            exclude_non_formated = argv[2]
+    if len(argv) == 2:
+        abs_path = argv[1]
+    elif len(argv) > 2:
+        abs_path = argv[1]
+        exclude_non_formated = argv[2]
 
-        organize_files(abs_path, exclude_non_formated)
-        remove_empty_folders(abs_path)
-    except Exception as e:
-        print(f"There was an error: {str(e)}")
+    organize_files(abs_path, exclude_non_formated)
+    remove_empty_folders(abs_path)
+except Exception as e:
+    print(f"There was an error: {str(e)}")

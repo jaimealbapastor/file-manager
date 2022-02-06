@@ -1,12 +1,9 @@
 import os
 
 
-def remove_empty_folders(path_abs):
-    walk = list(os.walk(path_abs))
-    for path, _, _ in walk[::-1]:
-        if len(os.listdir(path)) == 0:
-            os.rmdir(path)
+list = []
+list.insert(0, "indice0")
+list.insert(3, "indice3")
+list.insert(2, "indice2")
 
-
-if __name__ == '__main__':
-    remove_empty_folders("C:\\Users\\Jaime\\Desktop\\test")
+print(list)
