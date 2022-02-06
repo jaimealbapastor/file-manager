@@ -3,6 +3,7 @@ from sys import argv
 from PIL import Image
 from shutil import rmtree
 
+#### PARAMETERS ####
 spliter = '_'
 words_to_ignore = ["", "td", "cours", "feuilles"]
 mandatory_end = "PeiP2"
@@ -83,8 +84,11 @@ def ask_for_name(relative_root: str, file: str) -> str:
 
 try:
     abs_path = getcwd()
-    if len(argv) == 2:
+    combine_files = False
+    if len(argv) <= 2:
         abs_path = argv[1]
+    if len(argv) == 3:
+        combine_files = argv[2]
 
     if not path.exists(abs_path):
         print(f"ERROR. Not found {abs_path} or not exists.")
