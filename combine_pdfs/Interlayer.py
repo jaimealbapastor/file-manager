@@ -26,6 +26,10 @@ class InterlayerFactory():
         Returns:
             str: the name of the interlayer generated in the interlayer's folder
         """
+        
+        _path, title = path.split(root)
+        
+        print("Creating interlayer "+ title, end="\t")
 
         il = FPDF(orientation="P", unit="mm", format="A4")
         il.set_author("Jaime Alba")
@@ -37,7 +41,6 @@ class InterlayerFactory():
         il.set_font(family="Arial", size=12)
         il.set_text_color(0, 0, 0)
 
-        _path, title = path.split(root)
         self._add_title(il, title)
         self._add_path(il, _path)
         self._table_of_content(il, files)
@@ -51,6 +54,7 @@ class InterlayerFactory():
         il.output(filename)
         il.close()
 
+        print("done")
         return filename
 
     def _add_border_lines(self, pdf: FPDF) -> None:
