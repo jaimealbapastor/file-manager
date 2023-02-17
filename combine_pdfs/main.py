@@ -3,6 +3,7 @@ import PyPDF2
 from Interlayer import InterlayerFactory
 from os import walk, path
 from tkinter import filedialog
+from datetime import date
 
 # ask for folder
 folder_selected = filedialog.askdirectory()
@@ -11,11 +12,16 @@ folder_selected = folder_selected.replace('/', "\\")
 int_factory = InterlayerFactory(folder_selected)
 files_to_merge = []  # will be merged at last when interlayers are generated
 
-years_to_avoid = ["2016","2017","2018","2019","2020","2021","2023"]
+year_to_check = 2021 # <=== SET YEAR
+
+years_to_avoid = []
+for year in range(2015,date.today().year+2):
+    if year != year_to_check:
+        years_to_avoid.append(year)
 
 def nameVerifiesYear(name:str)-> bool:
     for year in years_to_avoid:
-        if year in name:
+        if str(year) in name:
             return False
     return True
 
@@ -32,7 +38,7 @@ for root, dirs, files in walk(folder_selected):
     print("Removing non pdf and non current year files", end='\t')
     i = 0
     while i < len(files):
-        if path.splitext(files[i])[1] != ".pdf" or not nameVerifiesYear(files[i]):
+        if (path.splitext(files[i])[1] != ".pdf" or not nameVerifiesYear(files[i])):
             files.pop(i)
             i -= 1  # TODO check if this line is really necesary, may cause problem
         i += 1
@@ -70,6 +76,9 @@ for pdf in files_to_merge:
     print("done")
     
 merger.write(path.join(folder_selected, path.join(
-    int_factory.parent_dir, "result.pdf")))
+    int_factory.parent_dir, f"result_{year_to_check}.pdf")))
 merger.close()
+
+int_factory.close()
+
 print("\nDONE !")

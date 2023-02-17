@@ -1,5 +1,18 @@
-from os import path
+from datetime import date
 
-print(path.split("C:\\dir1\\dir2\\dir3\\dir4"))
+year_to_check = 2022 # <=== SET YEAR
 
+years_to_avoid = []
+for year in range(2015,date.today().year+2):
+    if year != year_to_check:
+        years_to_avoid.append(year)
 
+def nameVerifiesYear(name:str)-> bool:
+    for year in years_to_avoid:
+        if year.__str__() in name:
+            return False
+    return True
+
+print(nameVerifiesYear("2023"))
+
+print(f"result_{year_to_check}.pdf")

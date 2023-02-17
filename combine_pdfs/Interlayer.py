@@ -1,6 +1,6 @@
 from re import S
 from fpdf import FPDF
-from os import path, makedirs
+from os import path, makedirs, remove
 
 
 class InterlayerFactory():
@@ -26,10 +26,10 @@ class InterlayerFactory():
         Returns:
             str: the name of the interlayer generated in the interlayer's folder
         """
-        
+
         _path, title = path.split(root)
-        
-        print("Creating interlayer "+ title, end="\t")
+
+        print("Creating interlayer " + title, end="\t")
 
         il = FPDF(orientation="P", unit="mm", format="A4")
         il.set_author("Jaime Alba")
@@ -121,9 +121,9 @@ class InterlayerFactory():
             pdf.add_page()
 
     def close(self):
-        # TODO delete interlayer_folder
+        if os.path.exists(self.interlayer_folder):
+            os.remove(self.interlayer_folder)
+        else:
+            print("Inter-layer folder removed")
         pass
 
-
-intfact = InterlayerFactory("C:/Users/Jaime/Desktop/test")
-intfact.create_interlayer("dir1\\dir2\\dir3\\test_title", ["file1.pdf"]*60)
