@@ -11,25 +11,28 @@ folder_selected = folder_selected.replace('/', "\\")
 int_factory = InterlayerFactory(folder_selected)
 files_to_merge = []  # will be merged at last when interlayers are generated
 
-years_to_avoid = ["2016","2017","2018","2019","2020","2022","2023"]
+years_to_avoid = ["2016","2017","2018","2019","2020","2021","2023"]
+
+def nameVerifiesYear(name:str)-> bool:
+    for year in years_to_avoid:
+        if year in name:
+            return False
+    return True
 
 print("===== Looping for files =====")
 for root, dirs, files in walk(folder_selected):
     print("=> Looping directory:\t"+root)
-    # check if year correspond: 2021
-    year_is_correct = True
-    for year in years_to_avoid:
-        if year in root: 
-            year_is_correct = False
-    if not year_is_correct: continue    
+    
+    # check if year correspond: 2022
+    if not nameVerifiesYear(root): continue    
     
     interlayer_has_been_added = False
 
     # remove non pdf files
-    print("Removing non pdf files", end='\t')
+    print("Removing non pdf and non current year files", end='\t')
     i = 0
     while i < len(files):
-        if path.splitext(files[i])[1] != ".pdf":
+        if path.splitext(files[i])[1] != ".pdf" or not nameVerifiesYear(files[i]):
             files.pop(i)
             i -= 1  # TODO check if this line is really necesary, may cause problem
         i += 1
