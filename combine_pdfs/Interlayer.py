@@ -121,8 +121,8 @@ class InterlayerFactory():
             pdf.add_page()
 
     def close(self):
-        if os.path.exists(self.interlayer_folder):
-            os.remove(self.interlayer_folder)
+        if path.exists(self.interlayer_folder):
+            remove(self.interlayer_folder)
         else:
             print("Inter-layer folder removed")
         pass

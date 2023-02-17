@@ -12,7 +12,7 @@ folder_selected = folder_selected.replace('/', "\\")
 int_factory = InterlayerFactory(folder_selected)
 files_to_merge = []  # will be merged at last when interlayers are generated
 
-year_to_check = 2021 # <=== SET YEAR
+year_to_check = 2022 # <=== SET YEAR
 
 years_to_avoid = []
 for year in range(2015,date.today().year+2):
@@ -79,6 +79,9 @@ merger.write(path.join(folder_selected, path.join(
     int_factory.parent_dir, f"result_{year_to_check}.pdf")))
 merger.close()
 
-int_factory.close()
+try:
+    int_factory.close()
+except:
+    print("Inter-layer folder could not be removed")
 
 print("\nDONE !")
