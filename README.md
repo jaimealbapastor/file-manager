@@ -3,9 +3,9 @@
 Theses programs help with file organization.  
 
 *It all started because reMarkable2 files are deleted after 3 months and the official app works extremely bad.  
-I you encounter the same problem, check [RCU](http://www.davisr.me/projects/rcu/) built by [Davis Remmel](http://www.davisr.me)*
+If you encounter the same problem, check [RCU](http://www.davisr.me/projects/rcu/) built by [Davis Remmel](http://www.davisr.me)*
 
-[**organizeRM**](organizeRM.py) :
+[**organizeRM**](code/organizeRM.py) :
 
 - Checks if new file exists and saves it in the database.
 - If a file already exists, the older version is replaced by the newer one.
@@ -13,12 +13,12 @@ I you encounter the same problem, check [RCU](http://www.davisr.me/projects/rcu/
 - Creates a folder with the non formatted files (optional).
 - Deletes the empty folders.  
 
-[**convertPDF**](convertPDF.py) :
+[**convertPDF**](code/convertPDF.py) :
 
 - Combines the images into pdf with the parent directory name.
 - Deletes permanently the original folder with images after the pdf is created.
 
-[**formatNames**]:
+[**formatNames**](code/formatNames.py):
 
 - Opposite idea of *organiseRM.py*
 - Files must be properly located
