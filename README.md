@@ -1,4 +1,4 @@
-# reMarkable Projects
+# File Manager for reMarkable2
 
 Theses programs help with file organization.  
 
