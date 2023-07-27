@@ -1,6 +1,6 @@
 # File Manager for reMarkable2
 
-Theses programs help with file organization.  
+Theses scripts help with file organization.  
 
 *It all started because reMarkable2 files are deleted after 3 months and the official app works extremely bad.  
 If you encounter the same problem, check [RCU](http://www.davisr.me/projects/rcu/) built by [Davis Remmel](http://www.davisr.me)*
